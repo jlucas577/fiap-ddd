@@ -6,24 +6,26 @@ Identificar os subdomínios do projeto, classificá-los (Core, Supporting, Gener
 ---
 
 ## 1. Nome do Projeto
-**[Escreva o nome do sistema ou aplicação que está sendo modelado]**
+**TravelWall**
 
 ---
 
 ## 2. Objetivo Principal do Projeto
-**[Explique o propósito do sistema em uma ou duas frases]**  
-*Exemplo:* Facilitar o agendamento de consultas médicas online entre pacientes e médicos.
+**Facilitar o planejamento de viagens.** - “Não perca a oportunidade de ter uma viagem fantástica”
 
 ---
 
 ## 3. Identificação dos Subdomínios
 Liste os subdomínios do sistema e classifique-os como **Core Domain**, **Supporting Subdomain** ou **Generic Subdomain**.
 
-| **Subdomínio**              | **Descrição**                                                                                      | **Tipo**         |
-|-----------------------------|--------------------------------------------------------------------------------------------------|------------------|
-| Ex.: Gestão de Consultas    | Gerencia o agendamento, consulta por vídeo e emissão de atestados e receitas.                   | Core Domain      |
-| Ex.: Cadastro de Usuários   | Gerencia o login, cadastro e permissões dos médicos e pacientes.                                | Supporting       |
-| Ex.: Pagamentos             | Processa pagamentos e repassa valores para médicos.                                             | Generic          |
+| **Subdomínio**              | **Descrição**                                                                                                                    | **Tipo**    |
+|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------|-------------|
+| Coletar preferências dos usuários | Através de perguntas abertas, entender e validar o perfil do viajante, para que a viagem possa ser moldada a partir disso. | Core Domain |
+| Gestão de dados dos locais        | Envolve a coleta e gestão dos locais de viagem, contendo pontos turísticos, opções de atividades etc.                      | Core Domain |
+| Passagens aéreas                  | Fornece informações de localização, calcula rotas e apresenta pontos de interesse próximos, apoiando o planejamento e a navegação durante a viagem. | Generic     |
+| Mapas                             | Utilizar API do Skyscanner para ter o valor da compra das passagens de forma econômica | Generic     |
+| Autenticação                      | Gerencia o cadastro, login e permissões dos usuários, garantindo o acesso seguro às funcionalidades do sistema.            | Generic     |
+| Assinaturas                       | Processa transações financeiras, gerencia assinaturas e realiza a cobrança de serviços premium oferecidos pela plataforma. | Generic     |
 
 ---
 
