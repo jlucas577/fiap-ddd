@@ -21,11 +21,13 @@ Liste os subdomínios do sistema e classifique-os como **Core Domain**, **Suppor
 | **Subdomínio**              | **Descrição**                                                                                                                    | **Tipo**    |
 |-----------------------------|----------------------------------------------------------------------------------------------------------------------------------|-------------|
 | Coletar preferências dos usuários | Através de perguntas abertas, entender e validar o perfil do viajante, para que a viagem possa ser moldada a partir disso. | Core Domain |
-| Gestão de dados dos locais        | Envolve a coleta e gestão dos locais de viagem, contendo pontos turísticos, opções de atividades etc.                      | Core Domain |
-| Passagens aéreas                  | Fornece informações de localização, calcula rotas e apresenta pontos de interesse próximos, apoiando o planejamento e a navegação durante a viagem. | Generic     |
+| Gestão de dados dos locais        | Envolver a coleta e gestão dos locais de viagem, contendo pontos turísticos, opções de atividades etc.                     | Core Domain |
+| Gestão de orçamentos              | Anotar custos durante a viagem                                                                                             | Support |
+| Controle de feedbacks             | Armazenar feedbacks dos usuários para melhorar recomendações futurasm                                                      | Support |
+| Passagens aéreas                  | Fornecer informações de localização, calcula rotas e apresenta pontos de interesse próximos, apoiando o planejamento e a navegação durante a viagem. | Generic     |
 | Mapas                             | Utilizar API do Skyscanner para ter o valor da compra das passagens de forma econômica | Generic     |
-| Autenticação                      | Gerencia o cadastro, login e permissões dos usuários, garantindo o acesso seguro às funcionalidades do sistema.            | Generic     |
-| Assinaturas                       | Processa transações financeiras, gerencia assinaturas e realiza a cobrança de serviços premium oferecidos pela plataforma. | Generic     |
+| Autenticação                      | Gerenciar o cadastro, login e permissões dos usuários, garantindo o acesso seguro às funcionalidades do sistema.            | Generic     |
+| Assinaturas                       | Processar transações financeiras, gerencia assinaturas e realiza a cobrança de serviços premium oferecidos pela plataforma. | Generic     |
 
 ---
 
