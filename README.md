@@ -18,16 +18,16 @@ Identificar os subdomínios do projeto, classificá-los (Core, Supporting, Gener
 ## 3. Identificação dos Subdomínios
 Liste os subdomínios do sistema e classifique-os como **Core Domain**, **Supporting Subdomain** ou **Generic Subdomain**.
 
-| **Subdomínio**              | **Descrição**                                                                                                                    | **Tipo**    |
-|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------|-------------|
-| Coletar preferências dos usuários | Através de perguntas abertas, entender e validar o perfil do viajante, para que a viagem possa ser moldada a partir disso. | Core Domain |
-| Gestão de dados dos locais        | Envolver a coleta e gestão dos locais de viagem, contendo pontos turísticos, opções de atividades etc.                     | Core Domain |
-| Gestão de orçamentos              | Anotar custos durante a viagem                                                                                             | Support |
-| Controle de feedbacks             | Armazenar feedbacks dos usuários para melhorar recomendações futurasm                                                      | Support |
-| Passagens aéreas                  | Fornecer informações de localização, calcula rotas e apresenta pontos de interesse próximos, apoiando o planejamento e a navegação durante a viagem. | Generic     |
-| Mapas                             | Utilizar API do Skyscanner para ter o valor da compra das passagens de forma econômica | Generic     |
-| Autenticação                      | Gerenciar o cadastro, login e permissões dos usuários, garantindo o acesso seguro às funcionalidades do sistema.            | Generic     |
-| Assinaturas                       | Processar transações financeiras, gerencia assinaturas e realiza a cobrança de serviços premium oferecidos pela plataforma. | Generic     |
+| **Subdomínio**                     | **Descrição**                                                                                                                         | **Tipo**     |
+|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| Coletar preferências dos usuários  | Através de perguntas abertas, entender e validar o perfil do viajante, permitindo que a viagem seja moldada com base nessas informações. | Core Domain |
+| Gestão de dados dos locais         | Envolver a coleta e gestão dos locais de viagem, incluindo pontos turísticos e opções de atividades.                                 | Core Domain |
+| Gestão de orçamentos               | Registrar e acompanhar os custos durante a viagem.                                                                                    | Support     |
+| Controle de feedbacks              | Armazenar feedbacks dos usuários para melhorar recomendações futuras.                                                                 | Support     |
+| Passagens aéreas                   | Utilizar APIs (como Skyscanner) para consultar valores e opções econômicas de passagens aéreas.                                       | Generic     |
+| Mapas                              | Fornecer informações de localização, calcular rotas e apresentar pontos de interesse próximos para apoiar o planejamento e navegação. | Generic     |
+| Autenticação                       | Gerenciar cadastro, login e permissões dos usuários, garantindo acesso seguro às funcionalidades do sistema.                         | Generic     |
+| Assinaturas                        | Processar transações financeiras, gerenciar assinaturas e realizar a cobrança de serviços premium da plataforma.                     | Generic     |
 
 ---
 
@@ -56,11 +56,18 @@ Explique como os bounded contexts vão se comunicar. Use os padrões de comunica
 ## 6. Definição da Linguagem Ubíqua
 Liste os termos principais da Linguagem Ubíqua do projeto. Explique brevemente cada termo.
 
-| **Termo**                    | **Descrição**                                                                                   |
-|------------------------------|-----------------------------------------------------------------------------------------------|
-| Ex.: Consulta                | Sessão médica entre paciente e médico.                                                       |
-| Ex.: Paciente                | Usuário que agenda e realiza consultas.                                                      |
-| Ex.: Receita                 | Prescrição médica gerada durante a consulta.                                                 |
+| **Termo**             | **Descrição**                                                                  |
+|-----------------------|--------------------------------------------------------------------------------|
+| Viajante              | Usuário que planeja ou participa de uma viagem.                                 |
+| Viagem                | Plano organizado com destino, datas, orçamento e atividades.                    |
+| Roteiro               | Sequência de experiências dentro da viagem.                                     |
+| Perfil de Viajante    | Representação dos interesses e histórico do usuário.                            |
+| Recomendação          | Sugestão personalizada gerada por IA.                                           |
+| Estilo de Viagem      | Classificação do perfil do viajante.                                            |
+| Orçamento             | Limite financeiro da viagem.                                                    |
+| Conquista             | Reconhecimento obtido por metas concluídas.                                     |
+| Meta de Viagem        | Objetivo pessoal do viajante.                                                   |
+| Otimização de Roteiro | Ajuste automático visando melhor custo e experiência.                           |
 
 ---
 
