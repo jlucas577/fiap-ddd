@@ -18,26 +18,31 @@ Identificar os subdomínios do projeto, classificá-los (Core, Supporting, Gener
 ## 3. Identificação dos Subdomínios
 Liste os subdomínios do sistema e classifique-os como **Core Domain**, **Supporting Subdomain** ou **Generic Subdomain**.
 
-| **Subdomínio**                     | **Descrição**                                                                                                                         | **Tipo**     |
-|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| Coletar preferências dos usuários  | Através de perguntas abertas, entender e validar o perfil do viajante, permitindo que a viagem seja moldada com base nessas informações. | Core Domain |
-| Gestão de dados dos locais         | Envolver a coleta e gestão dos locais de viagem, incluindo pontos turísticos e opções de atividades.                                 | Core Domain |
-| Gestão de orçamentos               | Registrar e acompanhar os custos durante a viagem.                                                                                    | Support     |
-| Controle de feedbacks              | Armazenar feedbacks dos usuários para melhorar recomendações futuras.                                                                 | Support     |
-| Passagens aéreas                   | Utilizar APIs (como Skyscanner) para consultar valores e opções econômicas de passagens aéreas.                                       | Generic     |
-| Mapas                              | Fornecer informações de localização, calcular rotas e apresentar pontos de interesse próximos para apoiar o planejamento e navegação. | Generic     |
-| Autenticação                       | Gerenciar cadastro, login e permissões dos usuários, garantindo acesso seguro às funcionalidades do sistema.                         | Generic     |
-| Assinaturas                        | Processar transações financeiras, gerenciar assinaturas e realizar a cobrança de serviços premium da plataforma.                     | Generic     |
+| **Subdomínio**                  | **Descrição**                                                                                   | **Tipo**      |
+|--------------------------------|-------------------------------------------------------------------------------------------------|---------------|
+| Coletar preferências dos usuários | Através de perguntas abertas, entender e validar o perfil do viajante, para que a viagem possa ser moldada a partir disso.| Core Domain   |
+| Curadoria de dados dos locais   | Avaliação qualitativa dos locais por meio da análise de opiniões e feedbacks dos usuários.      | Core Domain   |
+| Gestão de dados dos locais      | Gestão dos dados brutos sobre pontos turísticos, atividades e locais de viagem.                 | Support       |
+| Gestão de orçamentos            | Registrar e acompanhar os custos durante a viagem.                                              | Support       |
+| Controle de feedbacks           | Armazenar feedbacks dos usuários para melhorar recomendações futuras.                           | Support       |
+| Passagens aéreas                | Integração com APIs para consulta de valores e opções de passagens.                              | Generic       |
+| Mapas e climas                  | Fornecer localização, rotas e informações climáticas para navegação.                             | Generic       |
+| Autenticação                    | Gerenciar cadastro, login e permissões dos usuários.                                            | Generic       |
+| Assinaturas                     | Processar pagamentos e gerenciar planos premium.                                                | Generic       |
 
 ---
 
 ## 4. Desenho dos Bounded Contexts
 Liste e descreva os bounded contexts identificados no projeto. Explique a responsabilidade de cada um.
 
-| **Bounded Context**           | **Responsabilidade**                                                                                 | **Subdomínios Relacionados** |
-|-------------------------------|-----------------------------------------------------------------------------------------------------|-----------------------------|
-| Ex.: Contexto de Consultas    | Gerencia as consultas médicas, do agendamento à finalização, incluindo emissão de receitas.         | Gestão de Consultas         |
-| Ex.: Contexto de Pagamentos   | Processa cobranças de consultas e repasses para médicos ou clínicas.                              | Pagamentos                  |
+| **Bounded Context**      | **Responsabilidade**                                                                                         | **Subdomínios Relacionados**                                      |
+|--------------------------|---------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|
+| Perfil do Viajante       | Coletar, armazenar e analisar as preferências, interesses e perfil dos usuários para personalizar viagens.   | Coletar preferências dos usuários, Controle de feedbacks          |
+| Gestão de Destinos       | Gerenciar informações sobre destinos, pontos turísticos, atividades e dados locais.                          | Gestão de dados dos locais, Curadoria de dados dos locais          |
+| Planejamento de Viagem   | Criar, organizar e otimizar o planejamento da viagem, integrando perfil, orçamento e recomendações.          | Gestão de orçamentos, Coletar preferências dos usuários, Controle de feedbacks |
+| Mapas e Navegação        | Fornecer mapas, rotas, localização e meteorologia para apoio à navegação.                                     | Mapas e climas                                                    |
+| Identidade e Acesso      | Gerenciar cadastro, autenticação e controle de permissões dos usuários.                                      | Autenticação                                                      |
+| Faturamento e Assinatura | Processar pagamentos, gerenciar planos e controlar assinaturas premium da plataforma.                        | Assinaturas                                                       |
 
 ---
 
@@ -46,10 +51,15 @@ Explique como os bounded contexts vão se comunicar. Use os padrões de comunica
 - **Mensageria/Eventos (desacoplado):** Ex.: O Contexto de Consultas emite um evento "Consulta Finalizada", consumido pelo Contexto de Pagamentos.
 - **APIs (síncrono):** Ex.: O Contexto de Pagamentos consulta informações de preços no Contexto de Consultas.
 
-| **De (Origem)**              | **Para (Destino)**          | **Forma de Comunicação**    | **Exemplo de Evento/Chamada**                  |
-|------------------------------|-----------------------------|-----------------------------|-----------------------------------------------|
-| Contexto de Consultas        | Contexto de Pagamentos      | Mensageria (Evento)         | "Consulta Finalizada"                         |
-| Contexto de Cadastro          | Contexto de Consultas      | API                         | Obter informações de um Paciente pelo ID      |
+
+| **De (Origem)**           | **Para (Destino)**        | **Tipo de Relacionamento** | **Explicação**                                                                 | **Forma de Comunicação**     | **Exemplo de Evento/Chamada**                         |
+|---------------------------|----------------------------|----------------------------|--------------------------------------------------------------------------------|------------------------------|--------------------------------------------------------|
+| Perfil do Viajante        | Planejamento de Viagem     | Cliente / Fornecedor       | O Planejamento depende das preferências e do perfil do usuário para gerar roteiros personalizados. | API REST                     | Obter preferências do viajante                         |
+| Gestão de Destinos        | Planejamento de Viagem     | Cliente / Fornecedor       | O Planejamento consome dados de destinos e atividades para compor o roteiro.   | API REST                     | Obter informações de destinos                          |
+| Perfil do Viajante        | Gestão de Destinos         | Kernel Compartilhado       | O conceito de Preferência é compartilhado para classificar destinos compatíveis com o viajante.     | Kafka com Change Data Capture| Atualização de preferências quando perfil é atualizado |
+| Planejamento de Viagem    | Mapas e Navegação          | ACL (Anticorruption Layer) | O Planejamento utiliza serviços externos de mapas sem depender diretamente de suas estruturas internas. | API com camada de adaptação | Tradução de coordenadas, locais e horários              |
+| Identidade e Acesso       | Perfil do Viajante         | Conformista                | O Perfil aceita o modelo de autenticação existente sem impor adaptações.       | API REST                     | Autenticação válida: True / False                      |
+| Faturamento e Assinatura  | Planejamento de Viagem     | Cliente / Fornecedor       | O Planejamento consulta o status da assinatura para liberar recursos premium.  | API REST                     | Verificar plano do usuário                              |
 
 ---
 
@@ -58,16 +68,21 @@ Liste os termos principais da Linguagem Ubíqua do projeto. Explique brevemente 
 
 | **Termo**             | **Descrição**                                                                  |
 |-----------------------|--------------------------------------------------------------------------------|
-| Viajante              | Usuário que planeja ou participa de uma viagem.                                 |
-| Viagem                | Plano organizado com destino, datas, orçamento e atividades.                    |
-| Roteiro               | Sequência de experiências dentro da viagem.                                     |
-| Perfil de Viajante    | Representação dos interesses e histórico do usuário.                            |
-| Recomendação          | Sugestão personalizada gerada por IA.                                           |
-| Estilo de Viagem      | Classificação do perfil do viajante.                                            |
-| Orçamento             | Limite financeiro da viagem.                                                    |
-| Conquista             | Reconhecimento obtido por metas concluídas.                                     |
-| Meta de Viagem        | Objetivo pessoal do viajante.                                                   |
-| Otimização de Roteiro | Ajuste automático visando melhor custo e experiência.                           |
+| Viajante              | Usuário que planeja ou participa de uma viagem.                                |
+| Viagem                | Plano organizado com destino, datas, orçamento e atividades.                   |
+| Roteiro               | Sequência de experiências dentro da viagem.                                    |
+| Perfil de Viajante    | Representação dos interesses e histórico do usuário.                           |
+| Recomendação          | Sugestão personalizada gerada por IA.                                          |
+| Estilo de Viagem      | Classificação do perfil do viajante.                                           |
+| Orçamento             | Limite financeiro da viagem.                                                   |
+| Conquista             | Reconhecimento obtido por metas concluídas.                                    |
+| Meta de Viagem        | Objetivo pessoal do viajante.                                                  |
+| Otimização de Roteiro | Ajuste automático visando melhor custo e experiência.                          |
+| Jornada de Planejamento | Processo completo de criação e organização de uma viagem.                    |
+| Experiência           | Atividade ou vivência realizada durante a viagem.                              |
+| Pacote de Viagem      | Conjunto estruturado de roteiro, orçamento e experiências.                     |
+| Preferência           | Critério individual do viajante para personalização da viagem.                 |
+| Histórico de Viagens  | Registro das viagens anteriores do usuário.                                    |
 
 ---
 
