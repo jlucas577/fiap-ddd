@@ -153,7 +153,8 @@ abstract interface class TripRepository {
   Future<void> save(Trip trip);
 
   Future<void> remove(TripId id);
-}```
+}
+```
 
 
 ---
