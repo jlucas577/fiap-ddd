@@ -45,18 +45,31 @@ Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
 ---
 
 ## 🏗️ 3) Agregados e Aggregate Root (AR)
-**Agregado Principal:** **[Agregado Principal]**  
-**Conteúdo interno do agregado (apenas o necessário para consistência local):**  
-- **[Entidade interna/VO]**
-- **[Entidade interna/VO]**
 
-**Referências a outros agregados (por ID):**  
-- **[OutroAgregadoId]** (não conter dentro do agregado)
-- **[OutroAgregadoId]**
+**Agregado Principal:** **Viagem**
 
-**Boundary — Por que cada item está dentro/fora?**  
-- **Dentro porque [precisa de consistência transacional por causa da invariante X]**  
-- **Fora porque [pode esperar/eventual; pertence a outro BC; só precisa de referência por ID]**
+**Conteúdo interno do agregado (apenas o necessário para consistência local):**
+- **TripId (VO)**
+- **NomeDaViagem (VO)**
+- **Periodo (VO)**
+- **Orcamento (VO)**
+- **StatusDaViagem (Enum)**
+- **Atividade (Entidade interna do agregado)**
+
+**Referências a outros agregados (por ID):**
+- **UserId** (ViajanteId — não conter dentro do agregado)
+
+**Boundary — Por que cada item está dentro/fora?**
+
+- **Dentro porque** a Viagem precisa garantir consistência transacional sobre suas invariantes, como:
+  - Não permitir atividades fora do período.
+  - Não permitir orçamento negativo.
+  - Controlar corretamente o status da viagem.
+  - Garantir integridade do roteiro.
+
+- **Atividade está dentro porque** seu ciclo de vida depende totalmente da Viagem e suas regras precisam ser protegidas pelo Aggregate Root.
+
+- **UserId está fora porque** Usuário pertence a outro agregado (Contexto de Autenticação/Perfil). A Viagem apenas referencia o dono por ID, evitando acoplamento forte.
 
 ---
 
