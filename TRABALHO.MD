@@ -181,32 +181,88 @@ Eles são publicados preferencialmente **após o commit (pós-commit)** para gar
 ---
 
 ## 🗺️ 8) Diagrama (Mermaid ou ferramenta à sua escolha)
-> Mostre **Agregados/AR**, **VOs** e **relacionamentos por ID** entre agregados (não “contenha” outros agregados).
 
-**Exemplo de esqueleto Mermaid:**
+## 🗺️ 8) Diagrama (Mermaid)
+
 ```mermaid
 classDiagram
-  class AgregadoPrincipal {
-    +Guid Id
-    +Guid OutroAgregadoId
-    +VOImportante Valor
-    +Status Estado
-    +Operacao1(args)
-    +Operacao2(args)
+  direction LR
+
+  %% =========================
+  %% Aggregate Root: Viagem
+  %% =========================
+  class Trip {
+    +TripId id
+    +UserId userId
+    +NomeDaViagem nome
+    +Periodo periodo
+    +Orcamento orcamento
+    +StatusDaViagem status
+    +confirmar()
+    +iniciar(dataAtual)
+    +finalizar(dataAtual)
+    +adicionarAtividade(atividade)
+    +removerAtividade(atividadeId)
   }
 
-  class VOImportante {
-    +Atributo1
-    +Atributo2
-    +OperacaoVO()
+  %% =========================
+  %% Entidade interna do agregado
+  %% =========================
+  class Atividade {
+    +AtividadeId id
+    +String titulo
+    +DateTime dataHora
+    +String local
   }
 
-  class OutroAgregado {
-    +Guid Id
+  %% =========================
+  %% Value Objects (VOs)
+  %% =========================
+  class TripId {
+    +String value
   }
 
-  AgregadoPrincipal --> OutroAgregado : por Id
-  AgregadoPrincipal --> VOImportante
+  class NomeDaViagem {
+    +String value
+  }
+
+  class Periodo {
+    +DateTime dataInicio
+    +DateTime dataFim
+  }
+
+  class Orcamento {
+    +double valorTotal
+    +double totalGasto
+  }
+
+  class UserId {
+    +String value
+  }
+
+  %% =========================
+  %% Enum
+  %% =========================
+  class StatusDaViagem {
+    <<enumeration>>
+    Planejamento
+    Confirmada
+    EmAndamento
+    Finalizada
+  }
+
+  %% =========================
+  %% Relações
+  %% =========================
+  Trip *-- Atividade : contém
+  Trip --> TripId : possui
+  Trip --> NomeDaViagem : possui
+  Trip --> Periodo : possui
+  Trip --> Orcamento : possui
+  Trip --> StatusDaViagem : estado
+  Trip --> UserId : referencia por Id
+  Atividade --> Periodo : deve respeitar
+
 ```
 
 ---
