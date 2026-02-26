@@ -86,33 +86,58 @@ Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
 
 #### 📌 Invariantes do Agregado Viagem
 
-- **O Período da Viagem deve ser válido** (dataInicio < dataFim).
-- **Não permitir atividade fora do período da viagem.**
-- **Não permitir confirmar uma viagem sem ao menos uma atividade cadastrada.**
-- **Não permitir iniciar uma viagem sem ao menos uma atividade cadastrada.**
-- **Não permitir finalizar viagem sem ao menos uma atividade cadastrada.**
-- **Não permitir adicionar ou remover atividades se a viagem estiver Finalizada.**
-- **NomeDaViagem não pode ser vazio.**
-- **O status da viagem deve sempre estar em um estado válido do enum StatusDaViagem.**
+- O Período da Viagem deve ser válido (dataInicio < dataFim).
+- Não permitir atividade fora do período da viagem.
+- Não permitir confirmar uma viagem sem ao menos uma atividade cadastrada.
+- Não permitir iniciar uma viagem sem ao menos uma atividade cadastrada.
+- Não permitir finalizar viagem sem ao menos uma atividade cadastrada.
+- Não permitir adicionar ou remover atividades se a viagem estiver Finalizada.
+- NomeDaViagem não pode ser vazio.
+- O status da viagem deve sempre estar em um estado válido do enum StatusDaViagem.
 
 #### 📌 Invariantes do Orçamento (Entidade interna da Viagem)
 
-- **O valor total definido para o orçamento não pode ser negativo.**
-- **O total gasto deve ser sempre igual à soma dos gastos registrados.**
-- **Não permitir registrar ou remover gastos se a viagem estiver Finalizada.**
-- **Cada gasto deve possuir valor positivo.**
+- O valor total definido para o orçamento não pode ser negativo.
+- O total gasto deve ser sempre igual à soma dos gastos registrados.
+- Cada gasto deve possuir valor positivo.
+- A alteração de gastos é permitida em qualquer status da viagem.
 
 #### 📌 Invariantes do Agregado Viajante (Usuário)
 
-- **Email deve possuir formato válido.**
-- **NomeDoViajante deve conter pelo menos nome e sobrenome.**
-- **Senha deve possuir no mínimo 8 caracteres e atender às regras de segurança definidas.**
-- **Senha deve ser armazenada apenas como hash (nunca em texto puro).**
+- Email deve possuir formato válido.
+- NomeDoViajante deve conter pelo menos nome e sobrenome.
+- Senha deve possuir no mínimo 8 caracteres e atender às regras de segurança definidas.
+- Senha deve ser armazenada apenas como hash (nunca em texto puro).
 
 ---
 
 ## 🔄 Estados e Transições da AR Viagem
 
+- Planejamento -> Confirmada -> EmAndamento -> Finalizada
+
+### Regras:
+
+- Planejamento → Confirmada  
+  - Permitida se o período for válido.  
+  - Permitida se existir pelo menos uma atividade cadastrada.
+
+- Confirmada → EmAndamento  
+  - Permitida se a data atual for igual ou posterior à data de início.  
+  - Permitida apenas se existir pelo menos uma atividade cadastrada.
+
+- EmAndamento → Finalizada  
+  - Permitida se a data atual for posterior à data final.
+
+- Finalizada → qualquer outro estado  
+  - Bloqueada (estado terminal).
+
+- Adicionar/Remover Atividade  
+  - Permitido se o status for Planejamento, Confirmada ou EmAndamento.  
+  - Bloqueado apenas se o status for Finalizada.
+
+- Registrar/Remover Gasto  
+  - Permitido em qualquer status da viagem.  
+  - O total gasto deve ser recalculado após cada operação.
 
 ---
 
