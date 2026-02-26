@@ -159,13 +159,24 @@ abstract interface class TripRepository {
 ---
 
 ## 📣 6) Eventos de Domínio
-Defina **2–4 eventos** com **payload mínimo** e **momento de publicação** (preferir **pós-commit**). Diferencie **evento interno** vs **evento de integração**.
+
+Os eventos representam acontecimentos relevantes dentro do domínio de **Planejamento Inteligente de Viagens (TravelWall)**.  
+Eles são publicados preferencialmente **após o commit (pós-commit)** para garantir consistência do agregado e permitir comunicação desacoplada entre bounded contexts.
 
 | Evento | Quando ocorre | Payload mínimo | Interno/Integração | Observações |
 |---|---|---|---|---|
-| **[EventoXOcorrido]** | [ao confirmar/remarcar/etc.] | [ids, valores necessários] | [Interno/Integração] | [idempotência, consumidor] |
-| **[EventoYOcorrida]** | [...] | [...] | [...] | [...] |
-| **[EventoZOcorrida]** | [...] | [...] | [...] | [...] |
+| **ViagemCriada** | Quando uma nova viagem é criada pelo viajante | TripId, UserId | Interno | Inicializa o planejamento dentro do contexto de Planejamento de Viagem |
+| **ViagemConfirmada** | Quando a viagem muda de *Planejamento* para *Confirmada* | TripId, DataInicio | Integração | Permite geração de recomendações e preparação do roteiro |
+| **AtividadeAdicionada** | Quando uma atividade é adicionada à viagem | TripId, AtividadeId | Interno | Dispara validações e otimização do roteiro |
+| **ViagemFinalizada** | Quando a viagem passa para o estado *Finalizada* | TripId, DataFim | Integração | Pode gerar estatísticas, feedbacks e conquistas do viajante |
+
+### Observações
+
+- Eventos representam **fatos do domínio**, não comandos técnicos.
+- O payload contém apenas dados essenciais (IDs e informações mínimas).
+- Eventos **internos** atuam dentro do mesmo bounded context.
+- Eventos de **integração** permitem comunicação com outros contextos do sistema.
+- Todos os eventos são publicados após persistência da transação (**pós-commit**).
 
 ---
 
