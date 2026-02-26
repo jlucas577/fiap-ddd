@@ -144,13 +144,19 @@ Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
 ## 🗃️ 5) Repositório do Agregado (interface)
 > Repositório trabalha **apenas com a AR**, sem expor entidades internas do agregado. Consultas analíticas ficam fora (read models).
 
-**Linguagem livre** (ex.: C#, Java, Kotlin, TS). Exemplo (C# assíncrono, adapte nomes):
-```csharp
-public interface I[Agregado]Repository
-{
-    Task<[Agregado]?> ObterPorIdAsync(Guid id, CancellationToken ct = default);
-    Task AdicionarAsync([Agregado] entidade, CancellationToken ct = default);
-    Task SalvarAsync([Agregado] entidade, CancellationToken ct = default);
+```dart
+abstract class ViagemRepository {
+  /// Busca uma viagem pelo seu ID
+  Future<Viagem?> obterPorId(TripId id);
+
+  /// Adiciona uma nova viagem ao repositório
+  Future<void> adicionar(Viagem viagem);
+
+  /// Persiste alterações realizadas na viagem
+  Future<void> salvar(Viagem viagem);
+
+  /// Remove uma viagem (opcional conforme regra de negócio)
+  Future<void> remover(TripId id);
 }
 ```
 
