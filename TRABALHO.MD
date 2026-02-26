@@ -180,8 +180,6 @@ Eles são publicados preferencialmente **após o commit (pós-commit)** para gar
 
 ---
 
-## 🗺️ 8) Diagrama (Mermaid ou ferramenta à sua escolha)
-
 ## 🗺️ 8) Diagrama (Mermaid)
 
 ```mermaid
@@ -189,7 +187,7 @@ classDiagram
   direction LR
 
   %% =========================
-  %% Aggregate Root: Viagem
+  %% Aggregate Root: Viagem (Trip)
   %% =========================
   class Trip {
     +TripId id
@@ -199,10 +197,10 @@ classDiagram
     +Orcamento orcamento
     +StatusDaViagem status
     +confirmar()
-    +iniciar(dataAtual)
-    +finalizar(dataAtual)
-    +adicionarAtividade(atividade)
-    +removerAtividade(atividadeId)
+    +iniciar(DateTime dataAtual)
+    +finalizar(DateTime dataAtual)
+    +adicionarAtividade(Atividade atividade)
+    +removerAtividade(AtividadeId atividadeId)
   }
 
   %% =========================
@@ -213,6 +211,10 @@ classDiagram
     +String titulo
     +DateTime dataHora
     +String local
+  }
+
+  class AtividadeId {
+    +String value
   }
 
   %% =========================
@@ -252,17 +254,18 @@ classDiagram
   }
 
   %% =========================
-  %% Relações
+  %% Relações (DDD)
   %% =========================
   Trip *-- Atividade : contém
-  Trip --> TripId : possui
+  Atividade --> AtividadeId : identifica
+
+  Trip --> TripId : identifica
+  Trip --> UserId : referencia por Id
+
   Trip --> NomeDaViagem : possui
   Trip --> Periodo : possui
   Trip --> Orcamento : possui
   Trip --> StatusDaViagem : estado
-  Trip --> UserId : referencia por Id
-  Atividade --> Periodo : deve respeitar
-
 ```
 
 ---
