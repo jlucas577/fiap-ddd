@@ -145,20 +145,15 @@ Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
 > Repositório trabalha **apenas com a AR**, sem expor entidades internas do agregado. Consultas analíticas ficam fora (read models).
 
 ```dart
-abstract class ViagemRepository {
-  /// Busca uma viagem pelo seu ID
-  Future<Viagem?> obterPorId(TripId id);
+abstract interface class TripRepository {
+  Future<Trip?> getById(TripId id);
 
-  /// Adiciona uma nova viagem ao repositório
-  Future<void> adicionar(Viagem viagem);
+  Future<void> add(Trip trip);
 
-  /// Persiste alterações realizadas na viagem
-  Future<void> salvar(Viagem viagem);
+  Future<void> save(Trip trip);
 
-  /// Remove uma viagem (opcional conforme regra de negócio)
-  Future<void> remover(TripId id);
-}
-```
+  Future<void> remove(TripId id);
+}```
 
 
 ---
