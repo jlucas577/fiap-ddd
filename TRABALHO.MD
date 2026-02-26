@@ -66,6 +66,7 @@ Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
   - Não permitir orçamento negativo.
   - Controlar corretamente o status da viagem.
   - Garantir integridade do roteiro.
+  - Controla regras críticas do negócio e influencia diretamente quais operações são permitidas
 
 - **Atividade está dentro porque** seu ciclo de vida depende totalmente da Viagem e suas regras precisam ser protegidas pelo Aggregate Root.
 
