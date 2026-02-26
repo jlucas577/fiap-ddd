@@ -80,23 +80,39 @@ Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
 
 ---
 
-## 🧭 4) Invariantes e Máquina de Estados
-Liste invariantes (devem ser verdadeiras ao final de cada transação).
+## 🔒 4) Invariantes e Estados do Agregado
 
-**Invariantes (exemplos):**
-- **[Não aceitar pagamento acima do limite de crédito]**
-- **[Não permitir slot de horário sobreposto para o mesmo recurso]**
-- **[Não permitir alteração após estado X]**
-- **[Preço Total = soma dos itens] (se aplicável)**
+### Invariantes (devem ser verdadeiras ao final de cada transação)
 
-**Estados e transições da AR [Nome da AR]:**
-```
-[EstadoInicial] -> [Estado1] -> [Estado2] -> [EstadoFinal]
-Regras:
-- [Transição A] permitida se [condições/invariantes]
-- [Transição B] bloqueada se [condições]
-- [Transição C] exige [política/serviço]
-```
+#### 📌 Invariantes do Agregado Viagem
+
+- **O Período da Viagem deve ser válido** (dataInicio < dataFim).
+- **Não permitir atividade fora do período da viagem.**
+- **Não permitir confirmar uma viagem sem ao menos uma atividade cadastrada.**
+- **Não permitir iniciar uma viagem sem ao menos uma atividade cadastrada.**
+- **Não permitir finalizar viagem sem ao menos uma atividade cadastrada.**
+- **Não permitir adicionar ou remover atividades se a viagem estiver Finalizada.**
+- **NomeDaViagem não pode ser vazio.**
+- **O status da viagem deve sempre estar em um estado válido do enum StatusDaViagem.**
+
+#### 📌 Invariantes do Orçamento (Entidade interna da Viagem)
+
+- **O valor total definido para o orçamento não pode ser negativo.**
+- **O total gasto deve ser sempre igual à soma dos gastos registrados.**
+- **Não permitir registrar ou remover gastos se a viagem estiver Finalizada.**
+- **Cada gasto deve possuir valor positivo.**
+
+#### 📌 Invariantes do Agregado Viajante (Usuário)
+
+- **Email deve possuir formato válido.**
+- **NomeDoViajante deve conter pelo menos nome e sobrenome.**
+- **Senha deve possuir no mínimo 8 caracteres e atender às regras de segurança definidas.**
+- **Senha deve ser armazenada apenas como hash (nunca em texto puro).**
+
+---
+
+## 🔄 Estados e Transições da AR Viagem
+
 
 ---
 
