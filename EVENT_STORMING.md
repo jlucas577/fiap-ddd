@@ -63,11 +63,11 @@ Os eventos abaixo estão em ordem cronológica e no passado.
 
 | Bounded Context | Responsabilidade principal | Eventos relevantes |
 |---|---|---|
-| Perfil do Viajante | Coletar e validar perfil de preferências | PreferenciasColetadas, PerfilDeViajanteValidado |
-| Gestão de Destinos | Curadoria e manutenção de destinos | DestinosCurados |
-| Planejamento de Viagem | Criação da viagem, roteiro, estado e orçamento | ViagemCriada, OrcamentoDefinido, RoteiroGerado, ViagemConfirmada, ViagemIniciada, GastoRegistrado, ViagemFinalizada |
-| Faturamento e Assinatura | Gestão de plano e recursos premium | AssinaturaAtivada, AssinaturaExpirada |
-| Mapas e Navegação | Rotas, geolocalização e clima | RotaCalculada, ClimaConsultado |
+| Contexto do Viajante    | Coletar e validar perfil de preferências | PreferenciasColetadas, PerfilDeViajanteValidado |
+| Contexto de Destinos    | Curadoria e manutenção de destinos | DestinosCurados |
+| Contexto de Planejamento | Criação da viagem, roteiro, estado e orçamento | ViagemCriada, OrcamentoDefinido, RoteiroGerado, ViagemConfirmada, ViagemIniciada, GastoRegistrado, ViagemFinalizada |
+| Contexto de Pagamentos  | Gestão de plano e recursos premium | AssinaturaAtivada, AssinaturaExpirada |
+| Contexto de Navegação  | Rotas, geolocalição e clima | RotaCalculada, ClimaConsultado |
 
 ---
 

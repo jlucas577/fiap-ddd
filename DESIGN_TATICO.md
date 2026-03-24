@@ -31,7 +31,7 @@
 
 Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
 
-| Elemento            | Tipo (Entidade/VO) | Por quê? (identidade/imutável) |
+| Elemento            | Tipo               | Explicação |
 |---------------------|--------------------|--------------------------------|
 | **Viajante**        | Entidade           | Possui identidade própria (UserId) e ciclo de vida. Mesmo que email, nome ou senha mudem, continua sendo o mesmo usuário no sistema. |
 | **Email**           | Value Object       | Não possui identidade própria. Dois emails iguais representam o mesmo valor. Deve ser imutável e validado na criação. |
@@ -147,13 +147,13 @@ Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
 
 ```dart
 abstract interface class TripRepository {
-  Future<Trip?> getById(TripId id);
+  Future<Trip?> obterPorId(TripId id);
 
-  Future<void> add(Trip trip);
+  Future<void> adicionar(Trip trip);
 
-  Future<void> save(Trip trip);
+  Future<void> salvar(Trip trip);
 
-  Future<void> remove(TripId id);
+  Future<void> remover(TripId id);
 }
 ```
 

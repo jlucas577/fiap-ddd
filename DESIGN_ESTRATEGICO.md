@@ -37,12 +37,12 @@ Liste e descreva os bounded contexts identificados no projeto. Explique a respon
 
 | **Bounded Context**      | **Responsabilidade**                                                                                         | **Subdomínios Relacionados**                                      |
 |--------------------------|---------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|
-| Perfil do Viajante       | Coletar, armazenar e analisar as preferências, interesses e perfil dos usuários para personalizar viagens.   | Coletar preferências dos usuários, Controle de feedbacks          |
-| Gestão de Destinos       | Gerenciar informações sobre destinos, pontos turísticos, atividades e dados locais.                          | Gestão de dados dos locais, Curadoria de dados dos locais          |
-| Planejamento de Viagem   | Criar, organizar e otimizar o planejamento da viagem, integrando perfil, orçamento e recomendações.          | Gestão de orçamentos, Coletar preferências dos usuários, Controle de feedbacks |
-| Mapas e Navegação        | Fornecer mapas, rotas, localização e meteorologia para apoio à navegação.                                     | Mapas e climas                                                    |
-| Identidade e Acesso      | Gerenciar cadastro, autenticação e controle de permissões dos usuários.                                      | Autenticação                                                      |
-| Faturamento e Assinatura | Processar pagamentos, gerenciar planos e controlar assinaturas premium da plataforma.                        | Assinaturas                                                       |
+| Contexto do Viajante     | Coletar, armazenar e analisar as preferências, interesses e perfil dos usuários para personalizar viagens.   | Coletar preferências dos usuários, Controle de feedbacks          |
+| Contexto de Destinos     | Gerenciar informações sobre destinos, pontos turísticos, atividades e dados locais.                          | Gestão de dados dos locais, Curadoria de dados dos locais          |
+| Contexto de Planejamento | Criar, organizar e otimizar o planejamento da viagem, integrando perfil, orçamento e recomendações.          | Gestão de orçamentos, Coletar preferências dos usuários, Controle de feedbacks |
+| Contexto de Navegação    | Fornecer mapas, rotas, localização e meteorologia para apoio à navegação.                                     | Mapas e climas                                                    |
+| Contexto de Autenticação | Gerenciar cadastro, autenticação e controle de permissões dos usuários.                                      | Autenticação                                                      |
+| Contexto de Pagamentos   | Processar pagamentos, gerenciar planos e controlar assinaturas premium da plataforma.                        | Assinaturas                                                       |
 
 ---
 
@@ -54,12 +54,12 @@ Explique como os bounded contexts vão se comunicar. Use os padrões de comunica
 
 | **De (Origem)**           | **Para (Destino)**        | **Tipo de Relacionamento** | **Explicação**                                                                 | **Forma de Comunicação**     | **Exemplo de Evento/Chamada**                         |
 |---------------------------|----------------------------|----------------------------|--------------------------------------------------------------------------------|------------------------------|--------------------------------------------------------|
-| Perfil do Viajante        | Planejamento de Viagem     | Cliente / Fornecedor       | O Planejamento depende das preferências e do perfil do usuário para gerar roteiros personalizados. | API REST                     | Obter preferências do viajante                         |
-| Gestão de Destinos        | Planejamento de Viagem     | Cliente / Fornecedor       | O Planejamento consome dados de destinos e atividades para compor o roteiro.   | API REST                     | Obter informações de destinos                          |
-| Perfil do Viajante        | Gestão de Destinos         | Kernel Compartilhado       | O conceito de Preferência é compartilhado para classificar destinos compatíveis com o viajante.     | Kafka com Change Data Capture| Atualização de preferências quando perfil é atualizado |
-| Planejamento de Viagem    | Mapas e Navegação          | ACL (Anticorruption Layer) | O Planejamento utiliza serviços externos de mapas sem depender diretamente de suas estruturas internas. | API com camada de adaptação | Tradução de coordenadas, locais e horários              |
-| Identidade e Acesso       | Perfil do Viajante         | Conformista                | O Perfil aceita o modelo de autenticação existente sem impor adaptações.       | API REST                     | Autenticação válida: True / False                      |
-| Faturamento e Assinatura  | Planejamento de Viagem     | Cliente / Fornecedor       | O Planejamento consulta o status da assinatura para liberar recursos premium.  | API REST                     | Verificar plano do usuário                              |
+| Contexto do Viajante      | Contexto de Planejamento   | Customer-Supplier          | O Planejamento depende das preferências e do perfil do usuário para gerar roteiros personalizados. | API REST                     | Obter preferências do viajante                         |
+| Contexto de Destinos      | Contexto de Planejamento   | Customer-Supplier          | O Planejamento consome dados de destinos e atividades para compor o roteiro.   | API REST                     | Obter informações de destinos                          |
+| Contexto do Viajante      | Contexto de Destinos       | Shared Kernel              | O conceito de Preferência é compartilhado para classificar destinos compatíveis com o viajante.     | Kafka com Change Data Capture| Atualização de preferências quando perfil é atualizado |
+| Contexto de Planejamento  | Contexto de Navegação      | Anticorruption Layer (ACL) | O Planejamento utiliza serviços externos de mapas sem depender diretamente de suas estruturas internas. | API com camada de adaptação | Tradução de coordenadas, locais e horários              |
+| Contexto de Autenticação  | Contexto do Viajante       | Conformist                 | O Perfil aceita o modelo de autenticação existente sem impor adaptações.       | API REST                     | Autenticação válida: True / False                      |
+| Contexto de Pagamentos    | Contexto de Planejamento   | Customer-Supplier          | O Planejamento consulta o status da assinatura para liberar recursos premium.  | API REST                     | Verificar plano do usuário                              |
 
 ---
 
