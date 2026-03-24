@@ -22,9 +22,9 @@ Liste os subdomínios do sistema e classifique-os como **Core Domain**, **Suppor
 |--------------------------------|-------------------------------------------------------------------------------------------------|---------------|
 | Coletar preferências dos usuários | Através de perguntas abertas, entender e validar o perfil do viajante, para que a viagem possa ser moldada a partir disso.| Core Domain   |
 | Curadoria de dados dos locais   | Avaliação qualitativa dos locais por meio da análise de opiniões e feedbacks dos usuários.      | Core Domain   |
-| Gestão de dados dos locais      | Gestão dos dados brutos sobre pontos turísticos, atividades e locais de viagem.                 | Support       |
-| Gestão de orçamentos            | Registrar e acompanhar os custos durante a viagem.                                              | Support       |
-| Controle de feedbacks           | Armazenar feedbacks dos usuários para melhorar recomendações futuras.                           | Support       |
+| Gestão de dados dos locais      | Gestão dos dados brutos sobre pontos turísticos, atividades e locais de viagem.                 | Supporting    |
+| Gestão de orçamentos            | Registrar e acompanhar os custos durante a viagem.                                              | Supporting    |
+| Controle de feedbacks           | Armazenar feedbacks dos usuários para melhorar recomendações futuras.                           | Supporting    |
 | Passagens aéreas                | Integração com APIs para consulta de valores e opções de passagens.                              | Generic       |
 | Mapas e climas                  | Fornecer localização, rotas e informações climáticas para navegação.                             | Generic       |
 | Autenticação                    | Gerenciar cadastro, login e permissões dos usuários.                                            | Generic       |
@@ -92,11 +92,17 @@ Para cada tipo de subdomínio, explique a abordagem para implementação:
 - **Supporting Subdomain:** Desenvolver internamente ou parcialmente terceirizar.
 - **Generic Subdomain:** Usar ferramentas ou serviços de mercado.
 
-| **Subdomínio**              | **Estratégia**                         | **Ferramentas ou Serviços (se aplicável)** |
-|-----------------------------|---------------------------------------|-------------------------------------------|
-| Gestão de Consultas         | Desenvolvimento interno               |                                           |
-| Cadastro de Usuários        | Interno com uso de Auth0 para login   | Auth0                                     |
-| Pagamentos                  | Terceirizar usando API Stripe         | Stripe                                    |
+| **Subdomínio**                  | **Estratégia**                                                             | **Ferramentas ou Serviços (se aplicável)** |
+|---------------------------------|---------------------------------------------------------------------------|-------------------------------------------|
+| Coletar preferências dos usuários | Desenvolvimento interno com diferenciação por IA e regras de personalização | Modelos de recomendação próprios          |
+| Curadoria de dados dos locais   | Desenvolvimento interno com foco em qualidade e relevância de conteúdo    | Pipeline interno de curadoria             |
+| Gestão de dados dos locais      | Desenvolvimento interno com apoio de fontes externas                      | APIs de destinos e pontos de interesse    |
+| Gestão de orçamentos            | Desenvolvimento interno                                                    |                                           |
+| Controle de feedbacks           | Desenvolvimento interno                                                    |                                           |
+| Passagens aéreas                | Integração com serviços de mercado                                        | APIs de companhias/OTAs                   |
+| Mapas e climas                  | Integração com serviços de mercado                                        | Google Maps, OpenWeather                  |
+| Autenticação                    | Uso de serviço de mercado                                                  | Auth0                                     |
+| Assinaturas                     | Uso de serviço de mercado                                                  | Stripe                                    |
 
 ---
 

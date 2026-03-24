@@ -1,71 +1,96 @@
-# 📌 Roteiro para a Atividade de Event Storming
+# Event Storming do TravelWall
 
-## **1️⃣ Preparação (5-10 min)**
-- Cada aluno ou grupo escolhe um **processo central** do trabalho.
-  - Exemplo: Cadastro de clientes, processo de pagamento, controle de estoque, gestão de chamados.
----
-
-## **2️⃣ Mapeamento de Eventos de Domínio (15-20 min)**
-- Pergunta-chave: **"O que acontece no processo?"** *(sempre no passado)*
-- Cada grupo lista eventos importantes.
-  - **Exemplo para um sistema de vendas:**
-    - **Pedido Criado**
-    - **Pagamento Aprovado**
-    - **Pedido Enviado**
-    - **Pedido Entregue**
-- Organizar os eventos em ordem cronológica.
+## Objetivo
+Mapear o fluxo fim a fim de planejamento de viagem no TravelWall, validando eventos de domínio, comandos, políticas e integrações entre bounded contexts.
 
 ---
 
-## **3️⃣ Identificação de Comandos e Atores (10-15 min)**
-- Pergunta-chave: **"O que causou esse evento?"**
-- Relacionar **comandos** (ações ativas) com os **atores** (usuários ou sistemas externos).
-  - **Exemplo:**
-    - **Comando:** "Finalizar Pedido"
-    - **Ator:** Cliente
-    - **Evento gerado:** "Pedido Criado"
+## 1. Processo central escolhido
+**Planejar uma viagem personalizada com controle de orçamento e roteiro.**
 
 ---
 
-## **4️⃣ Descobrindo Regras e Políticas de Negócio (10-15 min)**
-- Pergunta-chave: **"Quais regras precisam ser seguidas nesse processo?"**
-- Identificar **políticas** (regras automáticas ou manuais).
-  - **Exemplo:**
-    - **Se o pagamento não for aprovado em 24h, cancelar pedido.**
-- Mapear **integrações externas** (ex: APIs, sistemas de terceiros).
+## 2. Linha do tempo de eventos de domínio
+Os eventos abaixo estão em ordem cronológica e no passado.
+
+1. **PreferenciasColetadas**
+2. **PerfilDeViajanteValidado**
+3. **ViagemCriada**
+4. **OrcamentoDefinido**
+5. **DestinosCurados**
+6. **RoteiroGerado**
+7. **ViagemConfirmada**
+8. **ViagemIniciada**
+9. **GastoRegistrado**
+10. **ViagemFinalizada**
+11. **FeedbackRegistrado**
 
 ---
 
-## **5️⃣ Identificação dos Bounded Contexts (10 min)**
-- Pergunta-chave: **"Quem é responsável por cada parte do processo?"**
-- Separar os eventos e comandos em **diferentes áreas do sistema**.
-  - **Exemplo:**
-    - **Contexto de Pedidos** (Criação e status dos pedidos)
-    - **Contexto de Pagamento** (Autorização financeira)
-    - **Contexto de Logística** (Entrega e rastreamento)
+## 3. Comandos, atores e eventos gerados
+
+| Comando | Ator | Evento gerado |
+|---|---|---|
+| ColetarPreferenciasDoViajante | Viajante | PreferenciasColetadas |
+| ValidarPerfilDoViajante | Serviço de Perfil | PerfilDeViajanteValidado |
+| CriarViagem | Viajante | ViagemCriada |
+| DefinirOrcamentoDaViagem | Viajante | OrcamentoDefinido |
+| CurarDestinosCompativeis | Serviço de Curadoria | DestinosCurados |
+| GerarRoteiro | Serviço de Planejamento | RoteiroGerado |
+| ConfirmarViagem | Viajante | ViagemConfirmada |
+| IniciarViagem | Sistema (por data) ou Viajante | ViagemIniciada |
+| RegistrarGasto | Viajante | GastoRegistrado |
+| FinalizarViagem | Sistema (por data) ou Viajante | ViagemFinalizada |
+| RegistrarFeedbackDaViagem | Viajante | FeedbackRegistrado |
 
 ---
 
-## **6️⃣ Discussão e Refinamento (15 min)**
-- Cada grupo apresenta seu fluxo.
-- **Perguntas para discussão:**
-  - Há eventos que poderiam ser melhor detalhados?
-  - Existem regras de negócio não mapeadas?
-  - Algum comando ou evento depende de um sistema externo?
-- Refinar o modelo conforme necessário.
+## 4. Políticas e regras de negócio validadas
+
+1. O período da viagem deve ser válido: data de início menor que data de fim.
+2. Não é permitido confirmar ou iniciar viagem sem ao menos uma atividade no roteiro.
+3. Não é permitido adicionar ou remover atividades quando a viagem estiver Finalizada.
+4. O orçamento total não pode ser negativo.
+5. Cada gasto deve ter valor positivo.
+6. O total gasto deve ser a soma dos gastos registrados e não pode ultrapassar o orçamento total.
+7. A transição Confirmada -> EmAndamento só pode ocorrer na data de início ou após ela.
+8. A transição EmAndamento -> Finalizada só pode ocorrer após a data final.
+9. Recursos premium de planejamento dependem de assinatura ativa.
 
 ---
 
-## **🎯 Dicas para Facilitar a Atividade**
-✅ **Eventos são sempre no passado** e os comandos no presente.  
-✅ **O foco é explorar e aprender**, não a perfeição.  
-✅ **Usar cores diferentes para cada tipo de post-it** (como na legenda da imagem de Event Storming).  
-✅ **Pensar no fluxo real do dia a dia do trabalho** para tornar a atividade mais prática.  
+## 5. Bounded contexts envolvidos
+
+| Bounded Context | Responsabilidade principal | Eventos relevantes |
+|---|---|---|
+| Perfil do Viajante | Coletar e validar perfil de preferências | PreferenciasColetadas, PerfilDeViajanteValidado |
+| Gestão de Destinos | Curadoria e manutenção de destinos | DestinosCurados |
+| Planejamento de Viagem | Criação da viagem, roteiro, estado e orçamento | ViagemCriada, OrcamentoDefinido, RoteiroGerado, ViagemConfirmada, ViagemIniciada, GastoRegistrado, ViagemFinalizada |
+| Faturamento e Assinatura | Gestão de plano e recursos premium | AssinaturaAtivada, AssinaturaExpirada |
+| Mapas e Navegação | Rotas, geolocalização e clima | RotaCalculada, ClimaConsultado |
 
 ---
-## Links Úteis:
 
-✅ https://medium.com/@jonesroberto/event-storming-guia-b%C3%A1sico-216498f5dd2d
+## 6. Integrações externas mapeadas
 
-✅ https://www.linkedin.com/pulse/o-que-%C3%A9-eventstorming-e-como-este-formato-de-workshop-rodrigues/
+1. APIs de mapas e clima para enriquecer o roteiro.
+2. APIs de passagens e destinos para opções de viagem.
+3. Gateway de pagamento para assinatura premium.
+
+---
+
+## 7. Riscos e pontos de atenção
+
+1. Mudanças tardias de preferência podem invalidar parte do roteiro já gerado.
+2. Falha de integração externa não deve impedir persistência do estado principal da viagem.
+3. Eventos de integração devem ser publicados após commit para evitar inconsistência entre contextos.
+
+---
+
+## 8. Critérios de validação do fluxo
+
+1. Todo evento deve nascer de um comando identificado.
+2. Todo comando deve ter ator responsável.
+3. Regras críticas do agregado Viagem precisam estar refletidas nas transições de estado.
+4. Eventos de integração não devem expor detalhes internos desnecessários do agregado.
 
