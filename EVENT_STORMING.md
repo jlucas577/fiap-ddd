@@ -94,3 +94,6 @@ Os eventos abaixo estão em ordem cronológica e no passado.
 3. Regras críticas do agregado Viagem precisam estar refletidas nas transições de estado.
 4. Eventos de integração não devem expor detalhes internos desnecessários do agregado.
 
+---
+
+- [Miro](https://miro.com/app/board/uXjVOyo1MIU=/?inviteKey=alhOZzQzeGRHdDh4WUlyeHpnSFJGQlhCZ3VudVBGMndBQkRiWDk2SEN6VzB3UGVNNjNacEQ2Y1lsUXBQT1BjQ3hGQy94ckxZZVRGY0ZhL3l2TEtCQVFDT3FHWXFsUVp6YkplY1htMk1ZemRneFd4M2ZEWE1rR3lHWkhlck5PY2FyVmtkMG5hNDA3dVlncnBvRVB2ZXBnPT0hdjE=)
