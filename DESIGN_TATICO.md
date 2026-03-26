@@ -31,7 +31,7 @@
 
 Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
 
-| Elemento            | Tipo (Entidade/VO) | Por quê? (identidade/imutável) |
+| Elemento            | Tipo               | Explicação |
 |---------------------|--------------------|--------------------------------|
 | **Viajante**        | Entidade           | Possui identidade própria (UserId) e ciclo de vida. Mesmo que email, nome ou senha mudem, continua sendo o mesmo usuário no sistema. |
 | **Email**           | Value Object       | Não possui identidade própria. Dois emails iguais representam o mesmo valor. Deve ser imutável e validado na criação. |
@@ -95,12 +95,12 @@ Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
 - NomeDaViagem não pode ser vazio.
 - O status da viagem deve sempre estar em um estado válido do enum StatusDaViagem.
 
-#### 📌 Invariantes do Orçamento (Entidade interna da Viagem)
+#### 📌 Invariantes do Orçamento (Value Object da Viagem)
 
 - O valor total definido para o orçamento não pode ser negativo.
 - O total gasto deve ser sempre igual à soma dos gastos registrados.
 - Cada gasto deve possuir valor positivo.
-- A alteração de gastos é permitida em qualquer status da viagem.
+- O total gasto não pode ultrapassar o valor total definido para o orçamento.
 
 #### 📌 Invariantes do Agregado Viajante (Usuário)
 
@@ -136,7 +136,8 @@ Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
   - Bloqueado apenas se o status for Finalizada.
 
 - Registrar/Remover Gasto  
-  - Permitido em qualquer status da viagem.  
+  - Permitido se o status for Planejamento, Confirmada ou EmAndamento.  
+  - Bloqueado se o status for Finalizada.  
   - O total gasto deve ser recalculado após cada operação.
 
 ---
@@ -146,13 +147,13 @@ Preencha a tabela justificando cada tipo (identidade vs. imutabilidade).
 
 ```dart
 abstract interface class TripRepository {
-  Future<Trip?> getById(TripId id);
+  Future<Trip?> obterPorId(TripId id);
 
-  Future<void> add(Trip trip);
+  Future<void> adicionar(Trip trip);
 
-  Future<void> save(Trip trip);
+  Future<void> salvar(Trip trip);
 
-  Future<void> remove(TripId id);
+  Future<void> remover(TripId id);
 }
 ```
 
@@ -181,7 +182,7 @@ Eles são publicados preferencialmente **após o commit (pós-commit)** para gar
 
 ---
 
-## 🗺️ 8) Diagrama (Mermaid)
+## 🗺️ 7) Diagrama (Mermaid)
 
 ```mermaid
 classDiagram
