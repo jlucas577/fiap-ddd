@@ -112,7 +112,8 @@ Desenhe um diagrama que mostre:
 - Como eles se comunicam.
 - A relação com os subdomínios.
 
-Use ferramentas como **Miro**, **Lucidchart** ou mesmo papel e caneta para criar seu diagrama e adicionar ao projeto.
+<img width="5136" height="2760" alt="image" src="https://github.com/user-attachments/assets/d9ab4fba-f625-4b0e-945d-c5b633bdf048" />
+
 
 ---
 
